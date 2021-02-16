@@ -6,13 +6,14 @@ import com.maxxxwk.architecturel24.R
 import com.maxxxwk.architecturel24.domain.model.PostModel
 import com.maxxxwk.architecturel24.domain.model.UserStatusTypes
 import com.maxxxwk.architecturel24.presentation.model.PostUIModel
+import javax.inject.Inject
 
-class PostUIMapper(private val context: Context) {
+class PostUIMapper @Inject constructor(private val context: Context) {
     fun map(postModels: List<PostModel>): List<PostUIModel> {
 
         return postModels.map {
             val (isBanned, warningVisibility, backgroundColor) = when (it.userStatusTypes) {
-                UserStatusTypes.NORMAL -> Triple(false, View.GONE,  context.getColor(R.color.white))
+                UserStatusTypes.NORMAL -> Triple(false, View.GONE, context.getColor(R.color.white))
                 UserStatusTypes.WARNING -> Triple(
                     false,
                     View.VISIBLE,

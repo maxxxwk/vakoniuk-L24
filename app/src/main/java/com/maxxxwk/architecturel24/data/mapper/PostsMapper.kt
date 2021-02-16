@@ -4,8 +4,9 @@ import com.maxxxwk.architecturel24.data.model.Post
 import com.maxxxwk.architecturel24.data.repository.UserStatusRepository
 import com.maxxxwk.architecturel24.domain.model.PostModel
 import com.maxxxwk.architecturel24.domain.model.UserStatusTypes
+import javax.inject.Inject
 
-class PostsMapper(
+class PostsMapper @Inject constructor(
     private val userStatusRepository: UserStatusRepository
 ) {
 
