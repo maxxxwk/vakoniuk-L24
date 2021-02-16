@@ -8,5 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="banned_user_item_background">#f15555</color>
-    <color name="user_with_warning_post_background">#f4f4f4</color>
+    <color name="user_with_warning_post_background">#BDBDBD</color>
 </resources>

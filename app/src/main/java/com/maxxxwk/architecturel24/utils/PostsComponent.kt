@@ -24,7 +24,7 @@ object PostsComponent {
                     userStatusRepository = UserStatusRepositoryImpl()
                 )
             ),
-            PostUIMapper()
+            PostUIMapper(context)
         )
     }
 

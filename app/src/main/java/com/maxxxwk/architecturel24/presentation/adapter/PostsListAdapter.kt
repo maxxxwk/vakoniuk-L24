@@ -3,6 +3,7 @@ package com.maxxxwk.architecturel24.presentation.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.maxxxwk.architecturel24.R
@@ -39,31 +40,18 @@ class PostsListAdapter :
     }
 
     class WithoutBanPostViewHolder(view: View) : PostViewHolder(view) {
-        private val binding = UserPostItemBinding.bind(view)
+        private val binding = DataBindingUtil.bind<UserPostItemBinding>(view)
 
         override fun bind(postUIModel: PostUIModel) {
-            with(binding) {
-                root.setBackgroundResource(postUIModel.backgroundColorRes)
-                binding.tvWarning.visibility = postUIModel.warningVisibility
-                tvUserId.text =
-                    root.context.getString(R.string.user_post_item_user_id_text, postUIModel.userId)
-                tvTitle.text = postUIModel.title
-                tvBody.text = postUIModel.body
-            }
+            binding?.post = postUIModel
         }
     }
 
     class BannedPostViewHolder(view: View) : PostViewHolder(view) {
-        private val binding = BannedUserPostItemBinding.bind(view)
+        private val binding = DataBindingUtil.bind<BannedUserPostItemBinding>(view)
 
         override fun bind(postUIModel: PostUIModel) {
-            with(binding) {
-                root.setBackgroundResource(postUIModel.backgroundColorRes)
-                tvMessage.text = binding.root.context.getString(
-                    R.string.banned_user_post_item_message_text,
-                    postUIModel.userId
-                )
-            }
+            binding?.post = postUIModel
         }
     }
 
