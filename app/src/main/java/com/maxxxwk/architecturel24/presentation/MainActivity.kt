@@ -8,19 +8,27 @@ import com.maxxxwk.architecturel24.R
 import com.maxxxwk.architecturel24.databinding.ActivityMainBinding
 import com.maxxxwk.architecturel24.presentation.adapter.PostsListAdapter
 import com.maxxxwk.architecturel24.presentation.model.PostUIModel
-import com.maxxxwk.architecturel24.utils.PostsComponent
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), PostsView {
+class MainActivity : AppCompatActivity() {
 
-    private val presenter: PostsPresenter by lazy { PostsComponent.createPresenter(this) }
     private val postsAdapter = PostsListAdapter()
     private lateinit var binding: ActivityMainBinding
+    @Inject lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupRecyclerView()
-        presenter.attachView(this)
+        observePosts()
+        viewModel.loadPosts()
+    }
+
+    private fun observePosts() {
+        viewModel.postsLiveData.observe(this, {
+            showPosts(it)
+        })
     }
 
     private fun setupRecyclerView() {
@@ -28,12 +36,7 @@ class MainActivity : AppCompatActivity(), PostsView {
         binding.rvPosts.adapter = postsAdapter
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.detachView()
-    }
-
-    override fun showPosts(posts: List<PostUIModel>) {
+    private fun showPosts(posts: List<PostUIModel>) {
         postsAdapter.submitList(posts)
     }
 }
