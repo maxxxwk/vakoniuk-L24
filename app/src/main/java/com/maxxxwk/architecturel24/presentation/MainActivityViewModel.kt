@@ -8,13 +8,14 @@ import com.maxxxwk.architecturel24.presentation.mapper.PostUIMapper
 import com.maxxxwk.architecturel24.presentation.model.PostUIModel
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class MainActivityViewModel @Inject constructor(
     private val postsRepository: PostsRepository,
     private val postUIMapper: PostUIMapper
-): ViewModel() {
+) : ViewModel() {
 
     private val _postsLiveData = MutableLiveData<List<PostUIModel>>()
     val postsLiveData: LiveData<List<PostUIModel>> = _postsLiveData
+
 
     fun loadPosts() {
         postsRepository.getPosts().map(postUIMapper::map).postOnMainThread(::postToLiveData)
