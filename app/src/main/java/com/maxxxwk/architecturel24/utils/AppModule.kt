@@ -1,4 +1,4 @@
-package com.maxxxwk.architecturel24.presentation
+package com.maxxxwk.architecturel24.utils
 
 import android.content.Context
 import com.google.gson.Gson
