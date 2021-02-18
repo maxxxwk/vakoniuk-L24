@@ -11,13 +11,21 @@ class PostsMapper @Inject constructor(
 ) {
 
     fun map(posts: List<Post>): List<PostModel> {
-        return posts.map {
+        val usersWithWarnings = userStatusRepository.getUsersWithWarningsIdList()
+        val bannedUsers = userStatusRepository.getBannedUsersIdList()
+        val sortedPosts = sort(posts)
+        return sortedPosts.map {
             val userStatus = when (it.userId) {
-                in userStatusRepository.getUsersWithWarningsIdList() -> UserStatusTypes.WARNING
-                in userStatusRepository.getBannedUsersIdList() -> UserStatusTypes.BANNED
+                in usersWithWarnings -> UserStatusTypes.WARNING
+                in bannedUsers -> UserStatusTypes.BANNED
                 else -> UserStatusTypes.NORMAL
             }
-            PostModel(it.userId ,it.id, it.title, it.body, userStatus)
+            PostModel(it.userId, it.id, it.title, it.body, userStatus)
         }
+    }
+
+    private fun sort(posts: List<Post>): List<Post> {
+        return posts.filter { !it.isFromRemoteStorage }
+            .sortedByDescending { it.id } + posts.filter { it.isFromRemoteStorage }
     }
 }

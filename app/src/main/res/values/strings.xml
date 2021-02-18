@@ -3,4 +3,12 @@
     <string name="user_post_item_warning_text">З попередженням</string>
     <string name="user_post_item_user_id_text">User id: %d</string>
     <string name="banned_user_post_item_message_text">Тут міг бути пост юзера %d, але він забанений</string>
+    <string name="open_create_new_post_activity_button_text">Create new post</string>
+    <string name="post_title_edit_text_hint">Enter post title</string>
+    <string name="post_body_edit_text_hint">Enter post body</string>
+    <string name="create_post_form_title_text">Create new post</string>
+    <string name="create_post_button_text">Create</string>
+    <string name="too_small_post_title_error">Title should have more than at least 3 symbols</string>
+    <string name="too_small_post_body_error">Body should have at least 5 symbols</string>
+    <string name="incorrect_words_in_post_title_error">Title contains incorrect words</string>
 </resources>

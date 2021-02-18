@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/create_post_activity_padding">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCreatePostFormTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_post_form_title_text"
+            android:textSize="@dimen/create_post_form_title_textSize"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPostTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/post_title_edit_text_marginTop"
+            android:hint="@string/post_title_edit_text_hint"
+            android:maxLength="50"
+            android:padding="@dimen/post_title_edit_text_padding"
+            app:layout_constraintLeft_toLeftOf="@id/tvCreatePostFormTitle"
+            app:layout_constraintRight_toRightOf="@id/tvCreatePostFormTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvCreatePostFormTitle" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPostBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/post_body_edit_text_marginTop"
+            android:hint="@string/post_body_edit_text_hint"
+            android:maxLength="500"
+            android:padding="@dimen/post_body_edit_text_padding"
+            app:layout_constraintLeft_toLeftOf="@id/etPostTitle"
+            app:layout_constraintRight_toRightOf="@id/etPostTitle"
+            app:layout_constraintTop_toBottomOf="@id/etPostTitle" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCreatePost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_post_button_text"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/etPostBody"
+            app:layout_constraintRight_toRightOf="@id/etPostBody"
+            app:layout_constraintTop_toBottomOf="@id/etPostBody"
+            app:layout_constraintVertical_bias="0.2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

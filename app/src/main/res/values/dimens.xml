@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="post_item_padding">16dp</dimen>
+    <dimen name="open_create_post_activity_button_marginBottom">32dp</dimen>
+    <dimen name="post_title_edit_text_padding">8dp</dimen>
+    <dimen name="create_post_activity_padding">32dp</dimen>
+    <dimen name="post_body_edit_text_padding">8dp</dimen>
+    <dimen name="post_body_edit_text_marginTop">40dp</dimen>
+    <dimen name="post_title_edit_text_marginTop">40dp</dimen>
+    <dimen name="create_post_form_title_textSize">32sp</dimen>
 </resources>

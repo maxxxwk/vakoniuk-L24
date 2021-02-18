@@ -1,5 +1,6 @@
 package com.maxxxwk.architecturel24.data.model
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Post(
@@ -10,5 +11,7 @@ data class Post(
     @SerializedName("title")
     val title: String,
     @SerializedName("body")
-    val body: String
+    val body: String,
+    @Expose(serialize = false, deserialize = false)
+    val isFromRemoteStorage: Boolean
 )

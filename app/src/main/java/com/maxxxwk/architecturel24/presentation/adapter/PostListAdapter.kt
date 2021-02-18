@@ -12,8 +12,8 @@ import com.maxxxwk.architecturel24.databinding.UserPostItemBinding
 import com.maxxxwk.architecturel24.presentation.callback.PostUIModelDiffCallback
 import com.maxxxwk.architecturel24.presentation.model.PostUIModel
 
-class PostsListAdapter :
-    ListAdapter<PostUIModel, PostsListAdapter.PostViewHolder>(PostUIModelDiffCallback()) {
+class PostListAdapter :
+    ListAdapter<PostUIModel, PostListAdapter.PostViewHolder>(PostUIModelDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val layout = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
