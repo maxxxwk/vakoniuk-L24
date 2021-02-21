@@ -1,7 +1,6 @@
-package com.maxxxwk.architecturel24.presentation.callback
+package com.maxxxwk.architecturel24.presentation
 
 import androidx.recyclerview.widget.DiffUtil
-import com.maxxxwk.architecturel24.presentation.model.PostUIModel
 
 class PostUIModelDiffCallback : DiffUtil.ItemCallback<PostUIModel>() {
     override fun areItemsTheSame(oldItem: PostUIModel, newItem: PostUIModel): Boolean {

@@ -7,7 +7,7 @@ import com.maxxxwk.architecturel24.domain.postValidation.PostValidationResult
 import com.maxxxwk.architecturel24.domain.postValidation.PostValidationUseCase
 import javax.inject.Inject
 
-class CreatePostViewModel @Inject constructor(
+class PostCreationActivityViewModel @Inject constructor(
     private val postsRepository: PostsRepository,
     private val postValidationUseCase: PostValidationUseCase
 ) : ViewModel() {

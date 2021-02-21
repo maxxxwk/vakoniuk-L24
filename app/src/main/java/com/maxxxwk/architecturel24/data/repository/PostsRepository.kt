@@ -1,10 +1,10 @@
 package com.maxxxwk.architecturel24.data.repository
 
-import com.maxxxwk.architecturel24.data.api.JSONPlaceholderService
+import com.maxxxwk.architecturel24.data.JSONPlaceholderService
 import com.maxxxwk.architecturel24.data.database.PostDatabase
 import com.maxxxwk.architecturel24.data.database.PostEntity
-import com.maxxxwk.architecturel24.data.mapper.PostsMapper
-import com.maxxxwk.architecturel24.data.model.Post
+import com.maxxxwk.architecturel24.data.PostMapper
+import com.maxxxwk.architecturel24.data.Post
 import com.maxxxwk.architecturel24.domain.model.PostModel
 import com.maxxxwk.architecturel24.utils.multithreading.AsyncOperation
 import com.maxxxwk.architecturel24.utils.multithreading.Multithreading
@@ -13,7 +13,7 @@ import javax.inject.Inject
 class PostsRepository @Inject constructor(
     private val multithreading: Multithreading,
     private val jsonPlaceholderService: JSONPlaceholderService,
-    private val postsMapper: PostsMapper,
+    private val postMapper: PostMapper,
     private val db: PostDatabase
 ) {
 
@@ -38,12 +38,12 @@ class PostsRepository @Inject constructor(
                         it.title,
                         it.body,
                         it.userId,
-                        true
+                        it.isFromRemoteStorage
                     )
                 }.toTypedArray())
                 return@async posts
             }
-        }.map(postsMapper::map)
+        }.map(postMapper::map)
     }
 
     fun createNewPost(post: PostEntity): AsyncOperation<Unit> {

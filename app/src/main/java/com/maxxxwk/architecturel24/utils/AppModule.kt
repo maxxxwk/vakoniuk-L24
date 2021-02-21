@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.maxxxwk.architecturel24.data.api.JSONPlaceholderService
+import com.maxxxwk.architecturel24.data.JSONPlaceholderService
 import com.maxxxwk.architecturel24.data.database.PostDatabase
 import com.maxxxwk.architecturel24.utils.multithreading.Multithreading
 import dagger.Module

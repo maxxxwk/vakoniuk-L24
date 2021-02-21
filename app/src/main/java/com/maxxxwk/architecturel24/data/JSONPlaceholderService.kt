@@ -1,6 +1,5 @@
-package com.maxxxwk.architecturel24.data.api
+package com.maxxxwk.architecturel24.data
 
-import com.maxxxwk.architecturel24.data.model.Post
 import retrofit2.Call
 import retrofit2.http.GET
 

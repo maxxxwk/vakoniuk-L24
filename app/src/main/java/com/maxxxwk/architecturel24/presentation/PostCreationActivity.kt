@@ -9,18 +9,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.maxxxwk.architecturel24.R
-import com.maxxxwk.architecturel24.databinding.ActivityCreatePostBinding
+import com.maxxxwk.architecturel24.databinding.ActivityPostCreationBinding
 import com.maxxxwk.architecturel24.domain.postValidation.PostValidationResult
 import com.maxxxwk.architecturel24.utils.AppModule
 import com.maxxxwk.architecturel24.utils.DaggerAppComponent
 import javax.inject.Inject
 
-class CreatePostActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCreatePostBinding
+class PostCreationActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityPostCreationBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: CreatePostViewModel
+    private lateinit var viewModel: PostCreationActivityViewModel
     private val onErrorCallback: (PostValidationResult) -> Unit = {
         when (it) {
             PostValidationResult.TOO_SMALL_TITLE -> {
@@ -40,14 +40,14 @@ class CreatePostActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, CreatePostActivity::class.java))
+            context.startActivity(Intent(context, PostCreationActivity::class.java))
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_post)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_post_creation)
         setupViewModel()
         setupListeners()
     }
@@ -70,6 +70,7 @@ class CreatePostActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this, viewModelFactory)[CreatePostViewModel::class.java]
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory)[PostCreationActivityViewModel::class.java]
     }
 }
