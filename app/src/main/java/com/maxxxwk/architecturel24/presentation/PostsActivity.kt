@@ -7,26 +7,24 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.maxxxwk.architecturel24.R
-import com.maxxxwk.architecturel24.databinding.ActivityMainBinding
-import com.maxxxwk.architecturel24.presentation.adapter.PostListAdapter
-import com.maxxxwk.architecturel24.presentation.model.PostUIModel
+import com.maxxxwk.architecturel24.databinding.ActivityPostsBinding
 import com.maxxxwk.architecturel24.utils.AppModule
 import com.maxxxwk.architecturel24.utils.DaggerAppComponent
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class PostsActivity : AppCompatActivity() {
 
-    private val postsAdapter = PostListAdapter()
-    private lateinit var binding: ActivityMainBinding
+    private val postsAdapter = PostsListAdapter()
+    private lateinit var binding: ActivityPostsBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: MainActivityViewModel
+    private lateinit var viewModel: PostsActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_posts)
         setupRecyclerView()
         setupViewModel()
         setupListeners()
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupListeners() {
         with(binding) {
             btnOpenCreatePostActivity.setOnClickListener {
-                CreatePostActivity.start(this@MainActivity)
+                PostCreationActivity.start(this@PostsActivity)
             }
         }
     }
@@ -46,22 +44,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this, viewModelFactory)[MainActivityViewModel::class.java]
+        viewModel = ViewModelProviders.of(this, viewModelFactory)[PostsActivityViewModel::class.java]
         observePosts()
     }
 
     private fun observePosts() {
         viewModel.postsLiveData.observe(this, {
-            showPosts(it)
+            postsAdapter.submitList(it)
         })
     }
 
     private fun setupRecyclerView() {
-        binding.rvPosts.layoutManager = LinearLayoutManager(this)
-        binding.rvPosts.adapter = postsAdapter
-    }
-
-    private fun showPosts(posts: List<PostUIModel>) {
-        postsAdapter.submitList(posts)
+        with(binding.rvPosts) {
+            layoutManager = LinearLayoutManager(this@PostsActivity)
+            adapter = postsAdapter
+        }
     }
 }

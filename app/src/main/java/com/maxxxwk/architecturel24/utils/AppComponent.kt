@@ -1,13 +1,13 @@
 package com.maxxxwk.architecturel24.utils
 
-import com.maxxxwk.architecturel24.presentation.CreatePostActivity
-import com.maxxxwk.architecturel24.presentation.MainActivity
+import com.maxxxwk.architecturel24.presentation.PostCreationActivity
+import com.maxxxwk.architecturel24.presentation.PostsActivity
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [AppModule::class, ViewModelModule::class])
 interface AppComponent {
-    fun inject(activity: MainActivity)
-    fun inject(activity: CreatePostActivity)
+    fun inject(activity: PostsActivity)
+    fun inject(activity: PostCreationActivity)
 }

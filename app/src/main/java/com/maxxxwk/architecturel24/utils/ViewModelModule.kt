@@ -2,8 +2,8 @@ package com.maxxxwk.architecturel24.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.maxxxwk.architecturel24.presentation.CreatePostViewModel
-import com.maxxxwk.architecturel24.presentation.MainActivityViewModel
+import com.maxxxwk.architecturel24.presentation.PostCreationActivityViewModel
+import com.maxxxwk.architecturel24.presentation.PostsActivityViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -15,11 +15,11 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MainActivityViewModel::class)
-    abstract fun bindMainActivityViewModel(viewModel: MainActivityViewModel): ViewModel
+    @ViewModelKey(PostsActivityViewModel::class)
+    abstract fun bindMainActivityViewModel(viewModel: PostsActivityViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(CreatePostViewModel::class)
-    abstract fun bindCreateActivityViewModel(viewModel: CreatePostViewModel): ViewModel
+    @ViewModelKey(PostCreationActivityViewModel::class)
+    abstract fun bindCreateActivityViewModel(viewModel: PostCreationActivityViewModel): ViewModel
 }
