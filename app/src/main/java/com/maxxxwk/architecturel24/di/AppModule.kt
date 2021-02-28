@@ -1,4 +1,4 @@
-package com.maxxxwk.architecturel24.utils
+package com.maxxxwk.architecturel24.di
 
 import android.content.Context
 import androidx.room.Room
@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.maxxxwk.architecturel24.data.JSONPlaceholderService
 import com.maxxxwk.architecturel24.data.database.PostDatabase
-import com.maxxxwk.architecturel24.utils.multithreading.Multithreading
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -25,12 +24,6 @@ class AppModule(private val context: Context) {
     @Singleton
     fun provideContext(): Context {
         return context
-    }
-
-    @Provides
-    @Singleton
-    fun provideMultithreading(): Multithreading {
-        return Multithreading(context)
     }
 
     @Provides

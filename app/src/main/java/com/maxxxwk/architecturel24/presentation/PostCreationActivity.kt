@@ -11,15 +11,15 @@ import androidx.lifecycle.ViewModelProviders
 import com.maxxxwk.architecturel24.R
 import com.maxxxwk.architecturel24.databinding.ActivityPostCreationBinding
 import com.maxxxwk.architecturel24.domain.postValidation.PostValidationResult
-import com.maxxxwk.architecturel24.utils.AppModule
-import com.maxxxwk.architecturel24.utils.DaggerAppComponent
+import com.maxxxwk.architecturel24.di.AppModule
+import com.maxxxwk.architecturel24.di.DaggerAppComponent
 import javax.inject.Inject
 
 class PostCreationActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityPostCreationBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var binding: ActivityPostCreationBinding
     private lateinit var viewModel: PostCreationActivityViewModel
     private val onErrorCallback: (PostValidationResult) -> Unit = {
         when (it) {
@@ -46,10 +46,15 @@ class PostCreationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_post_creation)
-        setupViewModel()
+        initViewModel()
         setupListeners()
+    }
+
+    private fun initViewModel() {
+        DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory)[PostCreationActivityViewModel::class.java]
     }
 
     private fun setupListeners() {
@@ -67,10 +72,5 @@ class PostCreationActivity : AppCompatActivity() {
 
     private fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
-
-    private fun setupViewModel() {
-        viewModel =
-            ViewModelProviders.of(this, viewModelFactory)[PostCreationActivityViewModel::class.java]
     }
 }
