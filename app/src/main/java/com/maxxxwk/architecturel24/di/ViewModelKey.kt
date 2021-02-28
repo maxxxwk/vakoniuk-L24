@@ -1,4 +1,4 @@
-package com.maxxxwk.architecturel24.utils
+package com.maxxxwk.architecturel24.di
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

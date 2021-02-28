@@ -6,33 +6,37 @@ import com.maxxxwk.architecturel24.data.database.PostEntity
 import com.maxxxwk.architecturel24.data.PostMapper
 import com.maxxxwk.architecturel24.data.Post
 import com.maxxxwk.architecturel24.domain.model.PostModel
-import com.maxxxwk.architecturel24.utils.multithreading.AsyncOperation
-import com.maxxxwk.architecturel24.utils.multithreading.Multithreading
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class PostsRepository @Inject constructor(
-    private val multithreading: Multithreading,
     private val jsonPlaceholderService: JSONPlaceholderService,
     private val postMapper: PostMapper,
+    private val userStatusRepository: UserStatusRepository,
     private val db: PostDatabase
 ) {
 
-    fun getPosts(): AsyncOperation<List<PostModel>> {
-        return multithreading.async {
-            val postsFromLocalDB = db.postDao().getAll()
-            if (postsFromLocalDB.isNotEmpty()) {
-                return@async postsFromLocalDB.map {
-                    Post(
-                        it.userId,
-                        it.id,
-                        it.title,
-                        it.body,
-                        it.isFromRemoteStorage
-                    )
-                }
+    fun getPosts(): Single<List<PostModel>> {
+        val postsSingle: Single<List<Post>> = Single.create { emitter ->
+            val postsFromLocalDatabase = db.postDao().getAll().map {
+                Post(
+                    it.userId,
+                    it.id,
+                    it.title,
+                    it.body,
+                    it.isFromRemoteStorage
+                )
+            }
+            if (postsFromLocalDatabase.isNotEmpty()) {
+                emitter.onSuccess(postsFromLocalDatabase)
             } else {
-                val posts = jsonPlaceholderService.postsList().execute().body() ?: emptyList()
-                db.postDao().insertAll(*posts.map {
+                val postsFromRemoteStorage =
+                    jsonPlaceholderService.postsList().execute().body()?.map {
+                        Post(it.userId, it.id, it.title, it.body, true)
+                    } ?: emptyList()
+                db.postDao().insertAll(*postsFromRemoteStorage.map {
                     PostEntity(
                         it.id,
                         it.title,
@@ -41,20 +45,27 @@ class PostsRepository @Inject constructor(
                         it.isFromRemoteStorage
                     )
                 }.toTypedArray())
-                return@async posts
+                emitter.onSuccess(postsFromRemoteStorage)
             }
-        }.map(postMapper::map)
+        }
+        return Single.zip(
+            postsSingle,
+            userStatusRepository.getBannedUsersIdList(),
+            userStatusRepository.getUsersWithWarningsIdList(),
+            postMapper::map
+        ).subscribeOn(Schedulers.io())
     }
 
-    fun createNewPost(post: PostEntity): AsyncOperation<Unit> {
-        return multithreading.async {
+    fun createNewPost(post: PostEntity): Completable {
+        return Completable.create { source ->
             db.postDao().insertAll(post)
-        }
+            source.onComplete()
+        }.subscribeOn(Schedulers.io())
     }
 
-    fun getMaxPostId(): AsyncOperation<Int> {
-        return multithreading.async {
-            db.postDao().getMaxPostId()
-        }
+    fun getMaxPostId(): Single<Int> {
+        return Single.create<Int> { emitter ->
+            emitter.onSuccess(db.postDao().getMaxPostId())
+        }.subscribeOn(Schedulers.io())
     }
 }

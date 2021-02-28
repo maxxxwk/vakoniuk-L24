@@ -13,5 +13,5 @@ data class Post(
     @SerializedName("body")
     val body: String,
     @Expose(serialize = false, deserialize = false)
-    val isFromRemoteStorage: Boolean = true
+    val isFromRemoteStorage: Boolean
 )
