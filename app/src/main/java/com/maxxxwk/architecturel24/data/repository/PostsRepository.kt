@@ -4,7 +4,6 @@ import com.maxxxwk.architecturel24.data.JSONPlaceholderService
 import com.maxxxwk.architecturel24.data.database.PostDatabase
 import com.maxxxwk.architecturel24.data.database.PostEntity
 import com.maxxxwk.architecturel24.data.PostMapper
-import com.maxxxwk.architecturel24.data.Post
 import com.maxxxwk.architecturel24.domain.model.PostModel
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -19,32 +18,16 @@ class PostsRepository @Inject constructor(
 ) {
 
     fun getPosts(): Single<List<PostModel>> {
-        val postsSingle: Single<List<Post>> = Single.create { emitter ->
-            val postsFromLocalDatabase = db.postDao().getAll().map {
-                Post(
-                    it.userId,
-                    it.id,
-                    it.title,
-                    it.body,
-                    it.isFromRemoteStorage
-                )
-            }
+        val postsSingle: Single<List<PostEntity>> = Single.create { emitter ->
+            val postsFromLocalDatabase = db.postDao().getAll()
             if (postsFromLocalDatabase.isNotEmpty()) {
                 emitter.onSuccess(postsFromLocalDatabase)
             } else {
                 val postsFromRemoteStorage =
                     jsonPlaceholderService.postsList().execute().body()?.map {
-                        Post(it.userId, it.id, it.title, it.body, true)
+                        PostEntity(it.id, it.title, it.body, it.userId, true)
                     } ?: emptyList()
-                db.postDao().insertAll(*postsFromRemoteStorage.map {
-                    PostEntity(
-                        it.id,
-                        it.title,
-                        it.body,
-                        it.userId,
-                        it.isFromRemoteStorage
-                    )
-                }.toTypedArray())
+                db.postDao().insertAll(*postsFromRemoteStorage.toTypedArray())
                 emitter.onSuccess(postsFromRemoteStorage)
             }
         }
@@ -60,12 +43,6 @@ class PostsRepository @Inject constructor(
         return Completable.create { source ->
             db.postDao().insertAll(post)
             source.onComplete()
-        }.subscribeOn(Schedulers.io())
-    }
-
-    fun getMaxPostId(): Single<Int> {
-        return Single.create<Int> { emitter ->
-            emitter.onSuccess(db.postDao().getMaxPostId())
         }.subscribeOn(Schedulers.io())
     }
 }

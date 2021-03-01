@@ -11,4 +11,7 @@
     <string name="too_small_post_title_error">Title should have more than at least 3 symbols</string>
     <string name="too_small_post_body_error">Body should have at least 5 symbols</string>
     <string name="incorrect_words_in_post_title_error">Title contains incorrect words</string>
+    <string name="forbidden_word_advertisement">реклама</string>
+    <string name="forbidden_word_goods">товар</string>
+    <string name="forbidden_word_buy">куплю</string>
 </resources>
