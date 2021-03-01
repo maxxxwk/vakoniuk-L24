@@ -25,24 +25,18 @@ class PostCreationActivityViewModel @Inject constructor(
         onValidationErrorCallback: (PostValidationResult) -> Unit,
         onSuccessfulCallback: () -> Unit
     ) {
-        postsRepository.getMaxPostId().observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ maxId ->
-                val post = PostEntity(
-                    maxId + 1,
-                    title,
-                    body,
-                    USER_ID,
-                    false
-                )
-                val postValidationResult = postValidationUseCase(post)
-                if (postValidationResult == PostValidationResult.SUCCESSFUL) {
-                    postsRepository.createNewPost(post).observeOn(Schedulers.newThread())
-                        .subscribe { onSuccessfulCallback() }
-                } else {
-                    onValidationErrorCallback(postValidationResult)
-                }
-            }, { t ->
-                Log.d("LOG_TAG", t.message.orEmpty())
-            })
+        val post = PostEntity(
+            title = title,
+            body = body,
+            userId = USER_ID,
+            isFromRemoteStorage = false
+        )
+        val postValidationResult = postValidationUseCase(post)
+        if (postValidationResult == PostValidationResult.SUCCESSFUL) {
+            postsRepository.createNewPost(post).observeOn(Schedulers.newThread())
+                .subscribe { onSuccessfulCallback() }
+        } else {
+            onValidationErrorCallback(postValidationResult)
+        }
     }
 }
