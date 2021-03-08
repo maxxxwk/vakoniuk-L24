@@ -1,11 +1,8 @@
 package com.maxxxwk.architecturel24.di
 
-import android.content.Context
-import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.maxxxwk.architecturel24.data.JSONPlaceholderService
-import com.maxxxwk.architecturel24.data.database.PostDatabase
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -13,17 +10,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class AppModule(private val context: Context) {
+class NetworkModule {
 
     companion object {
         private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
-        private const val DATABASE_NAME = "PostsDatabase"
-    }
-
-    @Provides
-    @Singleton
-    fun provideContext(): Context {
-        return context
     }
 
     @Provides
@@ -51,11 +41,5 @@ class AppModule(private val context: Context) {
     @Singleton
     fun provideGson(): Gson {
         return GsonBuilder().create()
-    }
-
-    @Provides
-    @Singleton
-    fun provideDatabase(context: Context): PostDatabase {
-        return Room.databaseBuilder(context, PostDatabase::class.java, DATABASE_NAME).build()
     }
 }

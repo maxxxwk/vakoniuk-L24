@@ -1,4 +1,4 @@
-package com.maxxxwk.architecturel24.presentation
+package com.maxxxwk.architecturel24.ui.posts
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.maxxxwk.architecturel24.R
 import com.maxxxwk.architecturel24.databinding.BannedUsersPostItemBinding
 import com.maxxxwk.architecturel24.databinding.NormalUsersPostItemBinding
+import com.maxxxwk.architecturel24.ui.BannedUsersPostUIModel
+import com.maxxxwk.architecturel24.ui.NormalUsersPostUIModel
+import com.maxxxwk.architecturel24.ui.PostUIModel
 
 class PostsListAdapter :
     ListAdapter<PostUIModel, PostsListAdapter.PostViewHolder>(PostUIModelDiffCallback()) {

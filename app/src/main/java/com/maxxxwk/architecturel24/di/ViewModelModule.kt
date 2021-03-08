@@ -2,8 +2,8 @@ package com.maxxxwk.architecturel24.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.maxxxwk.architecturel24.presentation.PostCreationActivityViewModel
-import com.maxxxwk.architecturel24.presentation.PostsActivityViewModel
+import com.maxxxwk.architecturel24.ui.postCreation.PostCreationActivityViewModel
+import com.maxxxwk.architecturel24.ui.posts.PostsActivityViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

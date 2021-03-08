@@ -1,21 +1,23 @@
 package com.maxxxwk.architecturel24.data
 
-import com.maxxxwk.architecturel24.data.database.PostEntity
 import com.maxxxwk.architecturel24.domain.SortingPostsUseCase
 import com.maxxxwk.architecturel24.domain.model.PostModel
 import com.maxxxwk.architecturel24.domain.model.UserStatusTypes
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PostMapper @Inject constructor(
-    private val sortingPostsUseCase: SortingPostsUseCase
+    private val sortingPostsUseCase: SortingPostsUseCase,
+    private val dispatcher: CoroutineDispatcher
 ) {
 
-    fun map(
+    suspend fun map(
         posts: List<PostEntity>,
         bannedUsersIds: List<Int>,
         usersWithWarningIds: List<Int>
-    ): List<PostModel> {
-        return sortingPostsUseCase(posts).map {
+    ) = withContext(dispatcher) {
+        sortingPostsUseCase(posts).map {
             val userStatus = when (it.userId) {
                 in usersWithWarningIds -> UserStatusTypes.WARNING
                 in bannedUsersIds -> UserStatusTypes.BANNED

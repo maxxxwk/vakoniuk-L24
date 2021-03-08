@@ -5,7 +5,7 @@
 
         <variable
             name="post"
-            type="com.maxxxwk.architecturel24.presentation.NormalUsersPostUIModel" />
+            type="com.maxxxwk.architecturel24.ui.NormalUsersPostUIModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,15 +15,17 @@
         android:layout_height="wrap_content"
         android:background="@{post.backgroundColor}"
         android:padding="@dimen/post_item_padding">
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvWarning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/user_post_item_warning_text"
+            android:visibility="@{post.warningVisibility}"
             app:layout_constraintBottom_toTopOf="@id/tvUserId"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:visibility="@{post.warningVisibility}"
             app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUserId"
             android:layout_width="wrap_content"

@@ -1,16 +1,15 @@
-package com.maxxxwk.architecturel24.presentation
+package com.maxxxwk.architecturel24.ui.posts
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.maxxxwk.architecturel24.App
 import com.maxxxwk.architecturel24.R
 import com.maxxxwk.architecturel24.databinding.ActivityPostsBinding
-import com.maxxxwk.architecturel24.di.AppModule
-import com.maxxxwk.architecturel24.di.DaggerAppComponent
+import com.maxxxwk.architecturel24.ui.postCreation.PostCreationActivity
 import javax.inject.Inject
 
 class PostsActivity : AppCompatActivity() {
@@ -23,16 +22,29 @@ class PostsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initViewModel()
+        setupViewModel()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_posts)
         setupRecyclerView()
         setupListeners()
+        viewModel.loadPosts()
     }
 
-    private fun initViewModel() {
-        DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
+    override fun onRestart() {
+        super.onRestart()
+        viewModel.loadPosts()
+    }
+
+    private fun setupViewModel() {
+        (application as App).daggerComponent.inject(this)
         viewModel =
             ViewModelProviders.of(this, viewModelFactory)[PostsActivityViewModel::class.java]
+        observePosts()
+    }
+
+    private fun observePosts() {
+        viewModel.postsLiveData.observe(this, {
+            postsAdapter.submitList(it)
+        })
     }
 
     private fun setupListeners() {
@@ -41,15 +53,6 @@ class PostsActivity : AppCompatActivity() {
                 PostCreationActivity.start(this@PostsActivity)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadPosts().subscribe({ postUIModels ->
-            postsAdapter.submitList(postUIModels)
-        }, { t ->
-            Log.d("LOG_TAG", t.message.orEmpty())
-        })
     }
 
     private fun setupRecyclerView() {

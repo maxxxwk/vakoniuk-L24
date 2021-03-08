@@ -1,15 +1,19 @@
 package com.maxxxwk.architecturel24.data.repository
 
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class UserStatusRepository @Inject constructor() {
-    fun getBannedUsersIdList(): Single<List<Int>> {
-        return Single.just(listOf(7)).subscribeOn(Schedulers.io())
+class UserStatusRepository @Inject constructor(
+    private val dispatcher: CoroutineDispatcher
+) {
+
+    suspend fun getBannedUsersIdList() = withContext(dispatcher) {
+        listOf(7)
     }
 
-    fun getUsersWithWarningsIdList(): Single<List<Int>> {
-        return Single.just(listOf(3, 4)).subscribeOn(Schedulers.io())
+    suspend fun getUsersWithWarningsIdList() = withContext(dispatcher) {
+        listOf(3, 4)
     }
+
 }

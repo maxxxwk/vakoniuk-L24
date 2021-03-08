@@ -1,4 +1,4 @@
-package com.maxxxwk.architecturel24.presentation
+package com.maxxxwk.architecturel24.ui
 
 import androidx.annotation.ColorInt
 
