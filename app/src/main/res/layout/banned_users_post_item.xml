@@ -5,7 +5,7 @@
 
         <variable
             name="post"
-            type="com.maxxxwk.architecturel24.presentation.BannedUsersPostUIModel" />
+            type="com.maxxxwk.architecturel24.ui.BannedUsersPostUIModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

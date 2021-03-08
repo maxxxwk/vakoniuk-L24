@@ -1,4 +1,4 @@
-package com.maxxxwk.architecturel24.data.database
+package com.maxxxwk.architecturel24.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -11,13 +11,13 @@ data class PostEntity(
     @SerializedName("id")
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var id: Int = 0,
+    val id: Int = 0,
     @SerializedName("title")
     @ColumnInfo(name = "title")
-    var title: String,
+    val title: String,
     @SerializedName("body")
     @ColumnInfo(name = "body")
-    var body: String,
+    val body: String,
     @SerializedName("userId")
     @ColumnInfo(name = "user_id")
     val userId: Int,

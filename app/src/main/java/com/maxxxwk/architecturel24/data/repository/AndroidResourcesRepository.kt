@@ -4,10 +4,19 @@ import android.content.Context
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AndroidResourcesRepository @Inject constructor(private val context: Context) {
-    fun getColor(@ColorRes colorRes: Int) = ContextCompat.getColor(context, colorRes)
+class AndroidResourcesRepository @Inject constructor(
+    private val context: Context,
+    private val dispatcher: CoroutineDispatcher
+) {
+    suspend fun getColor(@ColorRes colorRes: Int) = withContext(dispatcher) {
+        ContextCompat.getColor(context, colorRes)
+    }
 
-    fun getString(@StringRes stringRes: Int) = context.getString(stringRes)
+    suspend fun getString(@StringRes stringRes: Int) = withContext(dispatcher) {
+        context.getString(stringRes)
+    }
 }
