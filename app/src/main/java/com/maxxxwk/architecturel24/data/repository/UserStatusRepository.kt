@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@Suppress("MagicNumber")
 class UserStatusRepository @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) {

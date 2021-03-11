@@ -30,6 +30,7 @@ class PostsRepository @Inject constructor(
             val postsFromRemoteStorage = jsonPlaceholderService.postsList().map {
                 PostEntity(it.id, it.title, it.body, it.userId, true)
             }
+            @Suppress("SpreadOperator")
             db.postDao().insertAll(*postsFromRemoteStorage.toTypedArray())
             return@withContext postMapper.map(
                 postsFromRemoteStorage,

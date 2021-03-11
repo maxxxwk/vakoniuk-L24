@@ -8,7 +8,10 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
-class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>) :
+class ViewModelFactory @Inject constructor(
+    private val viewModels: MutableMap<Class<out ViewModel>,
+            Provider<ViewModel>>
+) :
     ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -17,5 +20,4 @@ class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Cl
             ?: throw IllegalArgumentException("model class $modelClass not found")
         return viewModelProvider.get() as T
     }
-
 }
