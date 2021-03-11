@@ -15,5 +15,4 @@ class UserStatusRepository @Inject constructor(
     suspend fun getUsersWithWarningsIdList() = withContext(dispatcher) {
         listOf(3, 4)
     }
-
 }
