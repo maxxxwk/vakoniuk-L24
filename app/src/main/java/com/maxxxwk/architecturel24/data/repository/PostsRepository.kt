@@ -15,6 +15,7 @@ class PostsRepository @Inject constructor(
     private val db: PostDatabase,
     private val dispatcher: CoroutineDispatcher
 ) {
+
     suspend fun getPosts() = withContext(dispatcher) {
         val bannedUsersIds = userStatusRepository.getBannedUsersIdList()
         val usersWithWarningsIds = userStatusRepository.getUsersWithWarningsIdList()
