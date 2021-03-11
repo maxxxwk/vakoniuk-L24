@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Run unit tests
+      - name: Run detekt
         run: ./gradlew app:detekt
 
 
